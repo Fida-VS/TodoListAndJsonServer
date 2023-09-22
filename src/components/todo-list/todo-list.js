@@ -18,10 +18,13 @@ export const TodoList = () => {
 
 	const {todos} = useRequestGetTodos(refreshTodosFlag);
 
+	//для поиска по тудушкам
 	const filteredTodos = todos.filter((todo) => {
 		return todo.text.toLowerCase().includes(value.toLowerCase());
 	});
 
+
+	//sortedTodos вывожу в todo-list-layout через map
 	const [sortedTodos, setSortedTodos] = useState(filteredTodos);
 
 	const {requestAddNewTodo} = useRequestAddNewTodo(refreshTodos, value);
@@ -29,28 +32,35 @@ export const TodoList = () => {
 	const {requestDeleteTodo} = useRequestDeleteTodo(refreshTodos);
 
 
-	function getSortedTodos(isSorted){
+	function getSortedTodos(isSorted, refreshTodos){
 		setIsSorted(!isSorted);
 		if(isSorted === false){
 			setSortedTodos(filteredTodos);
 		} else if(isSorted === true){
-			let newTodos = [...filteredTodos].sort((a, b) => {
-						if (b.text.toLowerCase() > a.text.toLowerCase()) {
-						  return -1;
-						}
-						if (b.text.toLowerCase() < a.text.toLowerCase()) {
-						  return 1;
-						}
-						return 0;
-					  });
+			let newTodos = sort([...filteredTodos]);
 
 			setSortedTodos(newTodos);
 		}
+
+		refreshTodos();
 	}
 
 
 	//console.log(sortedTodos);
+	
 
+function sort(array){
+	array.sort((a, b) => {
+		if (b.text.toLowerCase() > a.text.toLowerCase()) {
+		  return -1;
+		}
+		if (b.text.toLowerCase() < a.text.toLowerCase()) {
+		  return 1;
+		}
+		return 0;
+	  });
+	  return array;
+}
 
 
 	return (
