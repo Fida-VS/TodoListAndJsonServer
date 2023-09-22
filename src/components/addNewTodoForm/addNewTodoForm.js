@@ -1,6 +1,6 @@
 import styles from './addNewTodoForm.module.css';
 
-export const AddNewTodoForm = ({ value, setValue, requestAddNewTodo, getSortedTodos, isSorted }) => {
+export const AddNewTodoForm = ({ value, setValue, requestAddNewTodo, isSorted, setIsSorted }) => {
 
 
 	return (
@@ -14,7 +14,7 @@ export const AddNewTodoForm = ({ value, setValue, requestAddNewTodo, getSortedTo
 					className={styles.input}
 				/>
 				<button onClick={requestAddNewTodo} className={styles.AddNewTodoButton}>Добавить</button>
-				<button onClick={() => getSortedTodos(isSorted)} className={styles.buttonAlphabeticalSorting}>По алфавиту</button>
+				<button onClick={() => setIsSorted(!isSorted)} className={styles.buttonAlphabeticalSorting}>По алфавиту</button>
 			</form>
 
 	);

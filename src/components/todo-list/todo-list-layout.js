@@ -8,7 +8,9 @@ export const TodoListLayout = ({
 	requestAddNewTodo,
 	getSortedTodos,
 	sortedTodos,
+	filteredTodos,
 	isSorted,
+	setIsSorted,
 	requestUpdateTodo,
 	requestDeleteTodo,
 	edit,
@@ -23,10 +25,14 @@ export const TodoListLayout = ({
 				setValue={setValue}
 				requestAddNewTodo={requestAddNewTodo}
 				isSorted={isSorted}
-			    getSortedTodos={getSortedTodos}
+			    //getSortedTodos={getSortedTodos},
+				setIsSorted={setIsSorted}
 			/>
 			<ul className={styles.todoList}>
-				{sortedTodos.map(({ id, text }) => (
+
+				{
+				isSorted !== true ?
+				filteredTodos.map(({ id, text }) => (
 					<Todo
 						key={id}
 						text={text}
@@ -38,7 +44,22 @@ export const TodoListLayout = ({
 						setUpdateInputValue={setUpdateInputValue}
 						setEdit={setEdit}
 					/>
-				))}
+				))
+				:
+				sortedTodos.map(({ id, text }) => (
+					<Todo
+						key={id}
+						text={text}
+						id={id}
+						edit={edit}
+						requestUpdateTodo={requestUpdateTodo}
+						requestDeleteTodo={requestDeleteTodo}
+						updateInputValue={updateInputValue}
+						setUpdateInputValue={setUpdateInputValue}
+						setEdit={setEdit}
+					/>
+				))
+			}
 			</ul>
 		</>
 	);
